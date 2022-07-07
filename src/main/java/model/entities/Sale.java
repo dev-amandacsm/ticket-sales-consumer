@@ -6,6 +6,7 @@ import model.enums.Status;
 import java.math.BigDecimal;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Builder
