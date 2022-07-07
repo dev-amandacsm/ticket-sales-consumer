@@ -21,11 +21,11 @@ public class SaleConsumer {
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, SaleDeserializer.class.getName());
-        properties.put(ConsumerConfig.GROUP_ID_CONFIG, "group2");
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, "group1");
         properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
         try(KafkaConsumer<String,Sale> consumer = new KafkaConsumer<>(properties)){
-            consumer.subscribe(Arrays.asList("sales"));
+            consumer.subscribe(Arrays.asList("demo-kafka"));
             while(true){
                 ConsumerRecords<String,Sale> records = consumer.poll(Duration.ofMillis(5000));
                 for (ConsumerRecord<String,Sale> record : records) {
