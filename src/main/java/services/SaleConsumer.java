@@ -1,5 +1,7 @@
 package services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import deserializers.SaleDeserializer;
 import model.entities.Sale;
 import model.enums.Status;
@@ -14,7 +16,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 public class SaleConsumer {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, JsonProcessingException {
         Properties properties = new Properties();
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
@@ -29,7 +31,8 @@ public class SaleConsumer {
                 for (ConsumerRecord<String,Sale> record : records) {
                     Sale sale = record.value();
                     sale.setStatus(Status.APPROVED);
-                    System.out.println(sale);
+                    String payload = new ObjectMapper().writeValueAsString(sale);
+                    System.out.println(payload);
                     Thread.sleep(500);
                 }
             }
